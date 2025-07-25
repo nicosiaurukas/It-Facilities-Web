@@ -20,14 +20,52 @@
     <header class="bg-dark text-white">
         <div class="container py-3">
             <h1 class="mb-3">IT Facilities</h1>
-            <nav>
-                <ul class="nav">
-                    <li class="nav-item"><a class="nav-link text-white" href="index.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="about.html">Nosotros</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="services.html">Servicios</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="gallery.html">Galería</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contacto</a></li>
-                </ul>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html">IT Facilities</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="index.html">Inicio</a>
+                            </li>
+                            <li class="nav-item dropdown" id="dropdownNosotros">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownNosotros" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Nosotros
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownNosotros">
+                                    <li><a class="dropdown-item" href="about.html">Quiénes Somos</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown" id="dropdownServicios">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownServicios" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Servicios
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownServicios">
+                                    <li><a class="dropdown-item" href="services.html">Nuestros Servicios</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown" id="dropdownGaleria">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownGaleria" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Galería
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownGaleria">
+                                    <li><a class="dropdown-item" href="gallery.html">Galería</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown" id="dropdownContacto">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownContacto" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Contacto
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownContacto">
+                                    <li><a class="dropdown-item" href="contact.html">Contacto</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
@@ -90,5 +128,23 @@
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
+    <script>
+      // Habilitar el despliegue del menú al pasar el mouse (hover) para todos los dropdowns
+      document.addEventListener('DOMContentLoaded', function () {
+        ['dropdownNosotros', 'dropdownServicios', 'dropdownGaleria', 'dropdownContacto'].forEach(function(id) {
+          var dropdown = document.getElementById(id);
+          if (dropdown) {
+            dropdown.addEventListener('mouseenter', function () {
+              var bsDropdown = bootstrap.Dropdown.getOrCreateInstance(dropdown.querySelector('.dropdown-toggle'));
+              bsDropdown.show();
+            });
+            dropdown.addEventListener('mouseleave', function () {
+              var bsDropdown = bootstrap.Dropdown.getOrCreateInstance(dropdown.querySelector('.dropdown-toggle'));
+              bsDropdown.hide();
+            });
+          }
+        });
+      });
+    </script>
 </body>
 </html>

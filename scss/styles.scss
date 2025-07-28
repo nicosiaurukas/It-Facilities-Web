@@ -195,3 +195,72 @@ footer {
     }
   }
 } 
+
+// --- SASS Avanzado ---
+
+// 1. Placeholder para extender en cards
+%card-base {
+  border-radius: $border-radius;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 1rem;
+  background: white;
+}
+
+// 2. Mixin para centrar con flexbox
+@mixin flex-center($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+}
+
+// 3. Mixin para transición
+@mixin transition($props...) {
+  transition: $props;
+}
+
+// 4. Animación keyframes
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+// 5. Bucle para delays
+@for $i from 1 through 5 {
+  .fade-delay-#{$i} {
+    animation-delay: 0.2s * $i;
+  }
+}
+
+// --- Aplicación de extend y mixins ---
+
+.service-card {
+  @extend %card-base;
+  border: 1px solid $accent-color;
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.team-member {
+  @extend %card-base;
+  @include flex-center(column);
+  margin: 1rem 0;
+}
+
+// Botón animado
+.btn-animado {
+  @include transition(all 0.3s cubic-bezier(0.4,0,0.2,1));
+  &:hover {
+    transform: scale(1.08) rotate(-2deg);
+    background: lighten($btn-bg, 10%);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    animation: bounce 0.5s;
+  }
+}
+
+// Ejemplo de operador SASS
+.main-content {
+  width: $max-width - 200px;
+}

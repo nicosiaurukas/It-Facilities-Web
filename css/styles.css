@@ -175,3 +175,67 @@ footer .social-links a:hover {
     gap: 0.5rem;
   }
 }
+.team-member, .service-card {
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  background: white;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.fade-delay-1 {
+  animation-delay: 0.2s;
+}
+
+.fade-delay-2 {
+  animation-delay: 0.4s;
+}
+
+.fade-delay-3 {
+  animation-delay: 0.6s;
+}
+
+.fade-delay-4 {
+  animation-delay: 0.8s;
+}
+
+.fade-delay-5 {
+  animation-delay: 1s;
+}
+
+.service-card {
+  border: 1px solid #ddd;
+}
+.service-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+.team-member {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.btn-animado {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-animado:hover {
+  transform: scale(1.08) rotate(-2deg);
+  background: rgb(76.5, 76.5, 76.5);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  animation: bounce 0.5s;
+}
+
+.main-content {
+  width: 1000px;
+}

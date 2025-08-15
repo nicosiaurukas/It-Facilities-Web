@@ -69,13 +69,16 @@
     </script>
 </head>
 <body>
+    <!-- Skip to main content link para accesibilidad -->
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
 
-    
+    <!-- Header con navegación -->
     <header class="bg-dark text-white">
         <div class="container py-3">
-            <h1 class="mb-3 text-center">IT Facilities</h1>
+            <h1 class="mb-3 text-center fade-in-up">IT Facilities</h1>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html">IT Facilities</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -123,47 +126,59 @@
         </div>
     </header>
 
-    
-    <section class="bg-light text-center py-5">
-        <div class="container">
-            <h2 class="mb-3">Bienvenidos a Nuestro Sitio</h2>
-            <p class="lead mb-4">Descubre todo lo que tenemos para ofrecerte</p>
-            <img src="img/test.jpg" alt="Imagen principal" class="img-fluid" style="max-height: 200px;" />
-        </div>
-    </section>
+    <!-- Main content -->
+    <main id="main-content">
+        <!-- Hero Section con Flexbox avanzado -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2 class="mb-3 fade-in-up">Bienvenidos a Nuestro Sitio</h2>
+                <p class="lead mb-4 slide-in-left">Descubre todo lo que tenemos para ofrecerte</p>
+                <img src="img/test.jpg" alt="Imagen principal de IT Facilities" class="img-fluid lazy-image" style="max-height: 200px;" loading="lazy" />
+                <div class="hero-buttons">
+                    <a href="services.html" class="btn btn-primary btn-animado">Ver Servicios</a>
+                    <a href="contact.html" class="btn btn-outline-light btn-animado">Contactar</a>
+                </div>
+            </div>
+        </section>
 
-    
-    <section class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Nuestros Servicios Destacados</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h3 class="card-title">Servicio Dev</h3>
-                            <p class="card-text">Conta con desarrolladores profesionales para potenciar tus aplicaciones.</p>
+        <!-- Servicios Destacados con CSS Grid y Flexbox -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-5 fade-in-up">Nuestros Servicios Destacados</h2>
+                <div class="services-container">
+                    <div class="services-grid">
+                        <div class="col-md-4 mb-4 fade-delay-1">
+                            <div class="card h-100 service-card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Servicio Dev</h3>
+                                    <p class="card-text">Conta con desarrolladores profesionales para potenciar tus aplicaciones.</p>
+                                    <a href="services.html" class="btn btn-animado">Más información</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h3 class="card-title">Servicio SRE</h3>
-                            <p class="card-text">Podes disponer de un equipo de SRE para monitorear y mantener el funcionamiento de los servicios.</p>
+                        <div class="col-md-4 mb-4 fade-delay-2">
+                            <div class="card h-100 service-card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Servicio SRE</h3>
+                                    <p class="card-text">Podes disponer de un equipo de SRE para monitorear y mantener el funcionamiento de los servicios.</p>
+                                    <a href="services.html" class="btn btn-animado">Más información</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h3 class="card-title">Servicio DBA</h3>
-                            <p class="card-text">Conta con un dba especializado para optimizar y mantener tus bases de datos.</p>
+                        <div class="col-md-4 mb-4 fade-delay-3">
+                            <div class="card h-100 service-card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Servicio DBA</h3>
+                                    <p class="card-text">Conta con un dba especializado para optimizar y mantener tus bases de datos.</p>
+                                    <a href="services.html" class="btn btn-animado">Más información</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     
     <footer class="bg-dark text-white py-4">
@@ -196,6 +211,54 @@
               bsDropdown.hide();
             });
           }
+        });
+
+        // Lazy loading para imágenes
+        const lazyImages = document.querySelectorAll('.lazy-image');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.classList.add('loaded');
+              observer.unobserve(img);
+            }
+          });
+        });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
+
+        // Animaciones de scroll
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        };
+
+        const scrollObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+            }
+          });
+        }, observerOptions);
+
+        // Observar elementos con animaciones
+        document.querySelectorAll('.fade-in-up, .slide-in-left').forEach(el => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(30px)';
+          el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          scrollObserver.observe(el);
+        });
+
+        // Efectos hover para cards
+        document.querySelectorAll('.service-card').forEach(card => {
+          card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.02)';
+          });
+          
+          card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+          });
         });
       });
     </script>

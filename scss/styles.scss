@@ -204,6 +204,7 @@ footer {
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   padding: 1rem;
   background: white;
+  transition: all 0.3s ease;
 }
 
 // 2. Mixin para centrar con flexbox
@@ -219,13 +220,51 @@ footer {
   transition: $props;
 }
 
-// 4. Animación keyframes
+// 4. Mixin para animaciones
+@mixin keyframe-animation($name, $duration: 1s, $timing: ease-in-out, $iteration: infinite) {
+  animation: $name $duration $timing $iteration;
+}
+
+// 5. Animación keyframes
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
 
-// 5. Bucle para delays
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// 6. Bucle para delays
 @for $i from 1 through 5 {
   .fade-delay-#{$i} {
     animation-delay: 0.2s * $i;
@@ -237,9 +276,19 @@ footer {
 .service-card {
   @extend %card-base;
   border: 1px solid $accent-color;
+  cursor: pointer;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    border-color: darken($accent-color, 20%);
+  }
   img {
     max-width: 100%;
     height: auto;
+    transition: transform 0.3s ease;
+  }
+  &:hover img {
+    transform: scale(1.05);
   }
 }
 
@@ -247,16 +296,148 @@ footer {
   @extend %card-base;
   @include flex-center(column);
   margin: 1rem 0;
+  cursor: pointer;
+  &:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  }
 }
 
 // Botón animado
 .btn-animado {
   @include transition(all 0.3s cubic-bezier(0.4,0,0.2,1));
+  position: relative;
+  overflow: hidden;
   &:hover {
     transform: scale(1.08) rotate(-2deg);
     background: lighten($btn-bg, 10%);
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    animation: bounce 0.5s;
+    animation: pulse 0.6s ease-in-out;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Efectos hover avanzados para navegación
+.nav-link {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: $accent-color;
+    transition: width 0.3s ease;
+  }
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+// Animaciones para elementos que aparecen
+.fade-in-up {
+  @include keyframe-animation(fadeInUp, 0.8s, ease-out, 1);
+}
+
+.slide-in-left {
+  @include keyframe-animation(slideInLeft, 0.6s, ease-out, 1);
+}
+
+// Efectos para cards de precios
+.price-card {
+  @extend %card-base;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  &:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  }
+  .price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: $main-bg;
+    transition: color 0.3s ease;
+  }
+  &:hover .price {
+    color: lighten($main-bg, 20%);
+    animation: pulse 1s ease-in-out;
+  }
+}
+
+// Efectos para imágenes de galería
+.gallery-grid figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: $border-radius;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  }
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: $border-radius;
+    transition: transform 0.5s ease;
+  }
+  &:hover img {
+    transform: scale(1.1);
+  }
+}
+
+// Efectos para formularios
+.form-group {
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  &:focus-within {
+    transform: translateX(5px);
+  }
+}
+
+input, textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid $accent-color;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  &:focus {
+    outline: none;
+    border-color: $main-bg;
+    box-shadow: 0 0 0 3px rgba($main-bg, 0.1);
+    transform: scale(1.02);
+  }
+}
+
+// Efectos para footer
+footer {
+  background-color: $main-bg;
+  color: $main-color;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .social-links {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    a {
+      color: $main-color;
+      text-decoration: none;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      &:hover {
+        color: $accent-color;
+        background: rgba($accent-color, 0.1);
+        transform: translateY(-3px) rotate(5deg);
+        animation: pulse 0.6s ease-in-out;
+      }
+    }
   }
 }
 
@@ -264,3 +445,331 @@ footer {
 .main-content {
   width: $max-width - 200px;
 }
+
+// Puedes usar .btn-animado en cualquier botón, y .fade-delay-1 ... .fade-delay-5 para animaciones con delay.
+// --- Fin SASS Avanzado ---
+
+// --- CSS Grid Nativo y Flexbox Avanzado ---
+
+// Grid personalizado para galería (además del existente)
+.gallery-grid-advanced {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 1.5rem;
+  grid-auto-rows: 200px;
+  grid-auto-flow: dense;
+  
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: $border-radius;
+    transition: all 0.3s ease;
+    
+    &:nth-child(4n+1) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+    
+    &:nth-child(6n+2) {
+      grid-column: span 2;
+    }
+    
+    &:hover {
+      transform: scale(1.02);
+      z-index: 2;
+    }
+  }
+}
+
+// Flexbox avanzado para secciones
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  background: linear-gradient(135deg, $main-bg 0%, lighten($main-bg, 20%) 100%);
+  color: $main-color;
+  text-align: center;
+  
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 800px;
+    padding: 2rem;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+// Flexbox para servicios
+.services-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Flexbox para equipo
+.team-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Flexbox para precios
+.pricing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 800px;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Flexbox para formulario de contacto
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    
+    .contact-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+  }
+  
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+// Media queries personalizadas para responsive avanzado
+@media (max-width: 1200px) {
+  .main-content {
+    width: 100%;
+    padding: 0 1rem;
+  }
+  
+  .hero-section {
+    min-height: 50vh;
+  }
+}
+
+@media (max-width: 992px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 40vh;
+    
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
+  .services-grid,
+  .team-grid,
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .gallery-grid-advanced {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 150px;
+    
+    .gallery-item:nth-child(4n+1),
+    .gallery-item:nth-child(6n+2) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+  }
+  
+  .contact-container {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    min-height: 30vh;
+    padding: 1rem;
+    
+    .hero-content {
+      gap: 1rem;
+    }
+  }
+  
+  .services-container,
+  .team-container,
+  .pricing-container {
+    gap: 1.5rem;
+  }
+  
+  .gallery-grid-advanced {
+    grid-gap: 1rem;
+  }
+}
+
+// --- Fin CSS Grid Nativo y Flexbox Avanzado ---
+
+// --- Accesibilidad y Performance ---
+
+// Lazy loading para imágenes
+.lazy-image {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  
+  &.loaded {
+    opacity: 1;
+  }
+}
+
+// Mejoras de accesibilidad
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Mejor contraste y focus
+:focus {
+  outline: 2px solid $accent-color;
+  outline-offset: 2px;
+}
+
+.btn:focus,
+.nav-link:focus {
+  outline: 2px solid $accent-color;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba($accent-color, 0.3);
+}
+
+// Skip to main content link
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: $main-bg;
+  color: $main-color;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: $border-radius;
+  z-index: 1000;
+  
+  &:focus {
+    top: 6px;
+  }
+}
+
+// Mejoras de contraste para texto
+.text-high-contrast {
+  color: darken($main-bg, 15%);
+  font-weight: 600;
+}
+
+// Indicadores de estado para formularios
+.form-group {
+  &.has-error {
+    input, textarea {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+    }
+  }
+  
+  &.has-success {
+    input, textarea {
+      border-color: #28a745;
+      box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+    }
+  }
+}
+
+// Mejoras para navegación por teclado
+.nav-item {
+  &:focus-within {
+    .dropdown-menu {
+      display: block;
+    }
+  }
+}
+
+// Animaciones reducidas para usuarios con preferencias
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Mejoras para lectores de pantalla
+[aria-hidden="true"] {
+  display: none !important;
+}
+
+// --- Fin Accesibilidad y Performance ---

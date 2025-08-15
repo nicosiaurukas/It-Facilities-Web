@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://itfacilities.com/sitemap.xml
+
+# Crawl-delay (opcional, para no sobrecargar el servidor)
+Crawl-delay: 1
+
+# Permitir acceso a recursos importantes
+Allow: /css/
+Allow: /js/
+Allow: /img/
+
+# Bloquear archivos innecesarios
+Disallow: /scss/
+Disallow: /node_modules/
+Disallow: /.git/
